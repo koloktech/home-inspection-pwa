@@ -1,4 +1,4 @@
-const API="YOUR_APPS_SCRIPT_DEPLOY_URL_HERE"; // replace with your deployed web app URL
+const API="https://script.google.com/macros/s/AKfycbzJvRsd6vEAGpWk4bErSJcJKYeWSbnjfYpG-bQkJGBGZG4T3VqXSugrGZ2HoLJ5sU5r/exec"; // replace with your deployed web app URL
 
 async function parse(){
   let text = document.getElementById("message").value;
