@@ -1,91 +1,45 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
-<link rel="manifest" href="manifest.json">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
-
-<link rel="stylesheet"
-href="style.css">
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <title>Home Inspection CRM</title>
 </head>
-
-
 <body>
 
-
-<h1>
-Home Inspection CRM
-</h1>
-
+<h1>Home Inspection CRM</h1>
 
 <section>
-
-<h2>
-Paste Customer Message
-</h2>
-
-
-<textarea id="message"></textarea>
-
-
-<button onclick="parse()">
-Extract
-</button>
-
-
+  <h2>Paste Customer Message</h2>
+  <textarea id="message" placeholder="Paste WhatsApp customer message here..."></textarea>
+  <button onclick="parse()">Extract</button>
 </section>
-
 
 <section>
-
-
-<input id="name"
-placeholder="Name">
-
-
-<input id="phone"
-placeholder="Phone">
-
-
-<input id="property"
-placeholder="Property">
-
-
-<select id="package">
-
-<option>Basic</option>
-
-<option>Plus</option>
-
-</select>
-
-
-<button onclick="save()">
-Save Order
-</button>
-
-
+  <h2>Order Details</h2>
+  <input id="name" placeholder="Name">
+  <input id="phone1" placeholder="Phone 1">
+  <input id="phone2" placeholder="Phone 2">
+  <input id="address" placeholder="Address">
+  <input id="unit" placeholder="Unit">
+  <input id="size" placeholder="Built Up Size">
+  <input id="property" placeholder="Property Type">
+  <input id="developer" placeholder="Developer">
+  <input id="date" placeholder="Inspection Date">
+  <input id="time" placeholder="Inspection Time (optional)">
+  <select id="package">
+    <option>Basic</option>
+    <option>Plus</option>
+  </select>
+  <textarea id="notes" placeholder="Notes (optional)"></textarea>
+  <button onclick="save()">Save Order</button>
 </section>
 
-
-
-<h2>
-Dashboard
-</h2>
-
-
+<h2>Dashboard</h2>
 <div id="dashboard"></div>
 
-
 <script src="app.js"></script>
-
-
 </body>
-
-
 </html>
