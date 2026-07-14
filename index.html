@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<link rel="stylesheet"
+href="style.css">
+
+</head>
+
+
+<body>
+
+
+<h1>
+Home Inspection CRM
+</h1>
+
+
+<section>
+
+<h2>
+Paste Customer Message
+</h2>
+
+
+<textarea id="message"></textarea>
+
+
+<button onclick="parse()">
+Extract
+</button>
+
+
+</section>
+
+
+<section>
+
+
+<input id="name"
+placeholder="Name">
+
+
+<input id="phone"
+placeholder="Phone">
+
+
+<input id="property"
+placeholder="Property">
+
+
+<select id="package">
+
+<option>Basic</option>
+
+<option>Plus</option>
+
+</select>
+
+
+<button onclick="save()">
+Save Order
+</button>
+
+
+</section>
+
+
+
+<h2>
+Dashboard
+</h2>
+
+
+<div id="dashboard"></div>
+
+
+<script src="app.js"></script>
+
+
+</body>
+
+
+</html>

@@ -1,0 +1,8 @@
+{
+"name":"Home Inspection CRM",
+"short_name":"Inspection",
+"display":"standalone",
+"start_url":"/",
+"background_color":"white",
+"theme_color":"black"
+}
