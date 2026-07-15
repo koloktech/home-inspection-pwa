@@ -5,7 +5,7 @@
 
 
 const API_URL =
-"https://script.google.com/macros/library/d/1QfG73-Oa_JVU9n4DpjR1Pd_5Ojwcxf8wSRU2H2YDEiwRc1DGSjPvd0sp/2";
+"https://script.google.com/macros/s/AKfycbzJvRsd6vEAGpWk4bErSJcJKYeWSbnjfYpG-bQkJGBGZG4T3VqXSugrGZ2HoLJ5sU5r/exec";
 
 
 
@@ -56,6 +56,12 @@ loadCalendar();
 
 }
 
+if(page=="paymentPage"){
+
+loadPayments();
+
+}
+
 
 
 }
@@ -78,6 +84,12 @@ await fetch(API_URL,{
 
 method:"POST",
 
+headers:{
+
+"Content-Type":"text/plain;charset=utf-8"
+
+},
+
 body:JSON.stringify({
 
 action,
@@ -87,6 +99,12 @@ action,
 })
 
 });
+
+if(!response.ok){
+
+throw new Error("Server returned "+response.status);
+
+}
 
 
 return await response.json();
@@ -428,6 +446,10 @@ await api(
 search
 }
 );
+
+orders = Array.isArray(orders)
+? orders.filter(o=>o.Order_ID)
+: [];
 
 
 
@@ -881,6 +903,77 @@ document
 
 
 /****************************************************
+ LOAD PAYMENTS
+****************************************************/
+
+
+async function loadPayments(){
+
+
+let container =
+document.getElementById("paymentsTable");
+
+
+container.innerHTML =
+'<p class="status-message">Loading payments...</p>';
+
+
+try{
+
+
+let payments =
+await api("payments");
+
+
+payments = Array.isArray(payments)
+? payments.filter(p=>p.Order_ID || p.Payment_ID || Number(p.Amount)>0)
+: [];
+
+
+if(!payments.length){
+
+container.innerHTML =
+'<p class="status-message">No payments recorded yet. Add a payment from an order.</p>';
+
+return;
+
+}
+
+
+let html =
+"<table><tr><th>Order</th><th>Date</th><th>Amount</th><th>Method</th><th>Notes</th></tr>";
+
+
+payments.forEach(p=>{
+
+html +=
+"<tr><td>"+safe(p.Order_ID)+
+"</td><td>"+safe(p.Payment_Date || p.Date || p.Created_Date)+
+"</td><td>RM "+money(p.Amount)+
+"</td><td>"+safe(p.Method)+
+"</td><td>"+safe(p.Notes)+
+"</td></tr>";
+
+});
+
+
+container.innerHTML = html + "</table>";
+
+
+}catch(error){
+
+container.innerHTML =
+'<p class="status-message error-state">Could not load payments: '+safe(error.message)+'</p>';
+
+}
+
+
+}
+
+
+
+
+/****************************************************
  CALENDAR
 ****************************************************/
 
@@ -893,6 +986,10 @@ let events =
 await api(
 "calendar"
 );
+
+events = Array.isArray(events)
+? events.filter(event=>event.id && event.start)
+: [];
 
 
 
@@ -963,6 +1060,29 @@ return document
 }
 
 
+
+
+function safe(value){
+
+return String(value ?? "")
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+function money(value){
+
+let amount = Number(value);
+
+return Number.isFinite(amount)
+? amount.toLocaleString("en-MY",{maximumFractionDigits:2})
+: "0";
+
+}
 
 
 window.onload=function(){
