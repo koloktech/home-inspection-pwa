@@ -1040,6 +1040,70 @@ payments = Array.isArray(payments)
 : [];
 
 
+let orders =
+await api("orders");
+
+orders = Array.isArray(orders)
+? orders.filter(o=>o.Order_ID)
+: [];
+
+let ordersByID = new Map(
+orders.map(o=>[o.Order_ID,o])
+);
+
+payments = payments.map(p=>{
+
+let order = ordersByID.get(p.Order_ID) || {};
+
+return {
+...p,
+Customer_Name:p.Customer_Name || order.Customer_Name,
+Balance:p.Balance ?? order.Balance,
+Payment_Status:p.Payment_Status || order.Payment_Status,
+Notes:p.Notes || order.Notes
+};
+
+});
+
+
+if(!payments.length){
+
+payments = orders
+.filter(o=>Number(o.Amount_Paid)>0)
+.map(o=>({
+
+Payment_ID:
+"ORDER-"+o.Order_ID,
+
+Order_ID:
+o.Order_ID,
+
+Customer_Name:
+o.Customer_Name,
+
+Payment_Date:
+o.Last_Update || o.Created_Date,
+
+Amount:
+o.Amount_Paid,
+
+Method:
+"Recorded in order",
+
+Payment_Status:
+o.Payment_Status,
+
+Balance:
+o.Balance,
+
+Notes:
+o.Notes
+
+}));
+
+}
+
+
 if(!payments.length){
 
 container.innerHTML =
@@ -1051,15 +1115,18 @@ return;
 
 
 let html =
-"<table><tr><th>Order</th><th>Date</th><th>Amount</th><th>Method</th><th>Notes</th></tr>";
+"<table><tr><th>Order</th><th>Customer</th><th>Date</th><th>Amount</th><th>Balance</th><th>Status</th><th>Method</th><th>Notes</th></tr>";
 
 
 payments.forEach(p=>{
 
 html +=
 "<tr><td>"+safe(p.Order_ID)+
-"</td><td>"+safe(p.Payment_Date || p.Date || p.Created_Date)+
+"</td><td>"+safe(p.Customer_Name)+
+"</td><td>"+safe(formatDateTime(p.Payment_Date || p.Date || p.Created_Date))+
 "</td><td>RM "+money(p.Amount)+
+"</td><td>RM "+money(p.Balance)+
+"</td><td>"+safe(p.Payment_Status)+
 "</td><td>"+safe(p.Method)+
 "</td><td>"+safe(p.Notes)+
 "</td></tr>";
@@ -1191,6 +1258,33 @@ let amount = Number(value);
 return Number.isFinite(amount)
 ? amount.toLocaleString("en-MY",{maximumFractionDigits:2})
 : "0";
+
+}
+
+
+function formatDateTime(value){
+
+if(!value){
+
+return "";
+
+}
+
+let date = new Date(value);
+
+if(Number.isNaN(date.getTime())){
+
+return value;
+
+}
+
+return date.toLocaleString("en-MY",{
+year:"numeric",
+month:"short",
+day:"numeric",
+hour:"2-digit",
+minute:"2-digit"
+});
 
 }
 
