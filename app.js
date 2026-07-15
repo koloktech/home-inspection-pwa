@@ -175,7 +175,7 @@ html += `
 
 
 <h3>
-${o.Customer_Name}
+${safe(o.Customer_Name)}
 </h3>
 
 
@@ -510,11 +510,11 @@ html += `
 
 <td>
 
-${o.Customer_Name}
+${safe(o.Customer_Name)}
 
 <br>
 
-${o.Phone_1}
+${safe(o.Phone_1)}
 
 </td>
 
@@ -522,11 +522,17 @@ ${o.Phone_1}
 
 <td>
 
-${o.Property_Type}
+${safe(o.Property_Type)}
 
 <br>
 
-${o.Package}
+${safe(o.Package)}
+
+<br>
+
+<small>
+${safe(o.Address)}
+</small>
 
 </td>
 
@@ -534,7 +540,7 @@ ${o.Package}
 
 <td>
 
-${o.Inspection_Date}
+${safe(o.Inspection_Date)}
 
 </td>
 
@@ -542,7 +548,7 @@ ${o.Inspection_Date}
 
 <td>
 
-RM ${o.Final_Price}
+RM ${safe(o.Final_Price)}
 
 </td>
 
@@ -550,7 +556,7 @@ RM ${o.Final_Price}
 
 <td>
 
-${o.Inspection_Status}
+${safe(o.Inspection_Status)}
 
 </td>
 
@@ -647,19 +653,71 @@ order.Customer_Name;
 
 
 editPhone.value =
-order.Phone_1;
+order.Phone_1 || "";
+
+
+editPhone2.value =
+order.Phone_2 || "";
+
+
+editAddress.value =
+order.Address || "";
+
+
+editUnit.value =
+order.Unit || "";
+
+
+editSize.value =
+order.Built_Up_Size || "";
+
+
+editProperty.value =
+order.Property_Type || "";
+
+
+editDeveloper.value =
+order.Developer || "";
 
 
 editPackage.value =
-order.Package;
+order.Package || "";
+
+
+editPrice.value =
+order.Final_Price || "";
+
+
+editPaid.value =
+order.Amount_Paid || "";
 
 
 editDate.value =
-order.Inspection_Date;
+order.Inspection_Date || "";
+
+
+editTime.value =
+order.Inspection_Time || "";
+
+
+editSalesStatus.value =
+order.Sales_Status || "Confirmed";
 
 
 editStatus.value =
-order.Inspection_Status;
+order.Inspection_Status || "Scheduled";
+
+
+editPaymentStatus.value =
+order.Payment_Status || "Unpaid";
+
+
+editReportStatus.value =
+order.Report_Status || "Not Started";
+
+
+editNotes.value =
+order.Notes || "";
 
 
 
@@ -695,16 +753,68 @@ Phone_1:
 editPhone.value,
 
 
+Phone_2:
+editPhone2.value,
+
+
+Address:
+editAddress.value,
+
+
+Unit:
+editUnit.value,
+
+
+Built_Up_Size:
+editSize.value,
+
+
+Property_Type:
+editProperty.value,
+
+
+Developer:
+editDeveloper.value,
+
+
 Package:
 editPackage.value,
+
+
+Final_Price:
+editPrice.value,
+
+
+Amount_Paid:
+editPaid.value,
 
 
 Inspection_Date:
 editDate.value,
 
 
+Inspection_Time:
+editTime.value,
+
+
+Sales_Status:
+editSalesStatus.value,
+
+
 Inspection_Status:
-editStatus.value
+editStatus.value,
+
+
+Payment_Status:
+editPaymentStatus.value,
+
+
+Report_Status:
+editReportStatus.value,
+
+
+Notes:
+editNotes.value
 
 
 };

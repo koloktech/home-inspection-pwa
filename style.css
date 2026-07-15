@@ -622,6 +622,39 @@ margin-top:0;
 }
 
 
+.modal-box-large{
+
+
+max-width:760px;
+
+
+max-height:90vh;
+
+
+overflow-y:auto;
+
+
+}
+
+
+#ordersTable small{
+
+
+display:block;
+
+
+margin-top:4px;
+
+
+color:#4b5563;
+
+
+line-height:1.35;
+
+
+}
+
+
 
 
 
